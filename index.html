@@ -7,40 +7,43 @@
 <script>
 
 String.prototype.replaceAll = function(target, replacement) {
-  return this.split(target).join(replacement);
+    return this.split(target).join(replacement);
 };
 
 var parse = function(){
-	var text = document.getElementById("input");
-	text = text.value;
-	text = text.replaceAll("{", "\\{");
-	text = text.replaceAll("}", "\\}");
-	text = text.replaceAll("mt", "\\varnothing");
+    var text = document.getElementById("input");
+    text = text.value;
 
-	var reps = [];
+    var reps = [];
 
-	var lines = text.split("\n");
-	for(var i = 0;i < lines.length;i++){
-		if(lines[i].includes("= \"")){
-			var s = lines[i].indexOf("= \"");
-			var e = lines[i].indexOf("\"", s + 3);
-			var data = lines[i].substring(s + 3,e);
-			var name = lines[i].substring(0,s - 1);
-			reps.push([name, data]);
+    var lines = text.split("\n");
+    for(var i = 0;i < lines.length;i++){
+        if(lines[i].includes("= \"")){
+            var s = lines[i].indexOf("= \"");
+            var e = lines[i].indexOf("\"", s + 3);
+            var data = lines[i].substring(s + 3,e);
+            var name = lines[i].substring(0,s - 1);
+            reps.push([name, data]);
 
-			lines.splice(i, 1);
-		}
-	}
-	var fin = "";
-	for(var i = 0;i < lines.length;i++){
-		fin = fin.concat(lines[i] + "\n");
-	}
-	for(var i = 0;i < reps.length;i++){
+            lines.splice(i, 1);
+            i--;
+        }
+    }
+    var fin = "";
+    for(var i = 0;i < lines.length;i++){
+        fin = fin.concat(lines[i] + "\n");
+    }
 
-		fin = fin.replaceAll(reps[i][0], reps[i][1]);
-	}
+    fin = fin.replaceAll("{", "\\{");
+    fin = fin.replaceAll("}", "\\}");
+    fin = fin.replaceAll("mt", "\\varnothing");
+    for(var i = 0;i < reps.length;i++){
 
-	document.getElementById("output").value = fin;
+        fin = fin.replaceAll(reps[i][0], reps[i][1]);
+    }
+
+
+
+    document.getElementById("output").value = fin;
 }
 </script>
-Chat Conversation End
