@@ -1,0 +1,21 @@
+<textarea onchange="parse()" id="input" rows="10" cols="100">
+</textarea>
+
+<textarea id="output" rows="10" cols="100">
+</textarea>
+
+<script>
+
+String.prototype.replaceAll = function(target, replacement) {
+  return this.split(target).join(replacement);
+};
+
+var parse = function(){
+	var text = document.getElementById("input");
+	text = text.value;
+	text = text.replaceAll("{", "\\{");
+	text = text.replaceAll("}", "\\}");
+	text = text.replaceAll("mt", "\\varnothing");
+	document.getElementById("output").value = text;
+}
+</script>
